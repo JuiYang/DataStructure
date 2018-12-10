@@ -1,0 +1,194 @@
+select sort:
+for: i <- [0, n]
+	for: j <- [0, n]
+		if: arr[i]>arr[j]
+			swap(arr[i], arr[j])
+
+insert sort:
+for: i <- [1, n]
+	int tmp = arr[i];
+	int j = i;
+	while (j > 0 && arr[i]< arr[j-1]){
+		arr[j] = arr[j-1]
+	}
+
+	arr[j] = tmp;
+
+
+bubble sort:
+for: i <- [0, n]
+	for: j <- [0, n-i+1]
+		if (arr[j] > arr[j+1])
+			swap(arr[i], arr[j+1])
+
+
+merge sort:
+void mergeSort(int * arr, int n){
+	__merge(arr, 0 , n);
+}
+
+void __merge(int * arr, int l , int r){
+	int middle = (l + r) /2;
+	__merge(arr, l, middle);
+	__merge(arr, middle + 1 , r);
+	merge(arr, l , middle , r);
+}
+
+void merge(int * arr, int l , int middle , int r){
+	int * newArr = new int[r-l+1];
+	int i = l;
+	int j = middle+1;
+	int k = 0;
+	while ( i <= middle && j <= r){
+		if ( arr[i] > arr[j])
+			newArr[k++] = arr[j++];
+		else 
+			newArr[k++] = arr[i++];
+	}
+
+	if ( i > middle ){
+		while(j<= r){
+			newArr[k++] = arr[j++];
+		}
+	}
+
+	if ( j > r){
+		while(i<= middle){
+			newArr[k++] = arr[i++];
+		}
+	}
+
+	for (int i = 0 ; i < k ; i++){
+		arr[i+l] = newArr[i];
+	}
+
+	delete[] newArr;
+}
+
+
+
+quick sort:
+void quickSort(int * arr, int n){
+	__quickSort(arr, 0, n-1);
+}
+
+void __quickSort(int * arr, int l , int r){
+	if (l >= r)
+		return;
+	int middle = getSentryIndex(arr, l , n);
+	__quickSort(arr, 0, middle-1);
+	__quickSort(arr, middle+1, r);
+}
+
+int getSentryIndex(int * arr, int l , int r){
+	int middle = getMiddle(arr, l, r);
+	swap(arr[middle], arr[r]);
+
+	int i = l;
+	int j = r-1;
+	while( i < j){
+		while( i < j && arr[i] < arr[r]){
+			i++;
+		}
+		while( i < j && arr[j] > arr[r]){
+			j--;
+		}
+		swap(arr[i], arr[j]);
+	}
+	swap(arr[i], arr[r]);
+}
+
+
+
+int getMiddle(int * arr, int l , int r){
+	int middle = (l + r) / 2;
+	if (arr[l] < arr[r]){
+		if (arr[l] > arr[middle]){
+			return l;
+		}else if (arr[j] < arr[middle]){
+			return r;
+		}else{
+			return middle;
+		}
+
+	}else{
+		if (arr[l] < arr[middle]){
+			return l;
+		}else if (arr[r] > arr[middle]){
+			return r;
+		}else{
+			return middle;
+		}
+	}
+}
+
+
+
+
+heapSort:
+// create heap
+// heapSort
+class MyHeap(){
+	private:
+		int count ;
+		int capacity;
+		int * data;
+	public:
+		MyHeap(int capacity){
+			data = new int[capacity];
+			this->capacity = capacity;
+			count = 0;
+		}
+
+		void insert(int leaf){
+			assert((count+1)< capacity);
+			data[count +1] = leaf;
+			count ++;
+			shiftUp(count);
+		}
+
+		void shiftUp(int k){
+			// 判断该元素是否出界,并比较大小
+			if ( k >0 && arr[k/2] < arr[k]){
+				swap(arr[k/2], arr[k]);
+				k / = 2;
+			}
+		}
+			
+		void shiftDown(int k){
+			// 调整根元素的位置，使其满足大根堆的性质
+			while( 2*k <= count){
+				int j = 2* k;
+				if (2*k +1 <= count && data[2*k+1] > data[k])
+					j +=1;
+				swap(data[j], data[k]);
+				k = j;
+			}	
+		}
+}
+
+
+
+
+
+
+
+
+merge sort: O(nlogn)
+Select Sort cost time: 0.021576s
+
+quick sort: O(nlogn)
+Select Sort cost time: 0.013148s
+
+调整堆，使其满足大根堆
+
+堆的访问从数组下标是１开始
+heapSort1: cost time: 0.037296s
+heapSort2: cost time: 0.035413s
+
+output:
+0 1 1 2 2 3 5 5 6 9 34 
+
+
+
+
