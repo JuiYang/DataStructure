@@ -170,10 +170,16 @@ int getSentryIndex(T * arr, int l , int r){
 	int i = l;
 	int j = r-1;
 	while( i < j){
-		while( i < j && arr[i] <= arr[r] ){
+// 		while( i < j && arr[i] <= arr[r] ){
+// 			i++;
+// 		}
+// 		while( i < j && arr[j] >= arr[r] ){
+// 			j--;
+// 		}
+		while( i < j && arr[i] < arr[r] ){
 			i++;
 		}
-		while( i < j && arr[j] >= arr[r] ){
+		while( i < j && arr[j] > arr[r] ){
 			j--;
 		}
 		swap( arr[i], arr[j]);
